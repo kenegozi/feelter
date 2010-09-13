@@ -28,3 +28,4 @@ get '/pipe' do
 		feed 'http://feeds.feedburner.com/kenegozi' #url :title => /a/i
 	end
 end
+
