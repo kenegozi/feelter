@@ -12,6 +12,17 @@ get '/pipe' do
 	if url==nil then 
 		return "400 bad request"
 	end
+	
+	url = url.strip
+	
+	p = {}
+	
+	q = params["q"]
+	q = nil if q != nil and q.strip == ''
+	
+	if q != nil then
+		p[:title] = /#{q}/i
+	end
 
 	Pipe.create do
 		feed url #, :title=>params["q"]
