@@ -25,6 +25,6 @@ get '/pipe' do
 	end
 
 	Pipe.create do
-		feed url #, :title=>params["q"]
+		feed url, p
 	end
 end
