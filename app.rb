@@ -25,7 +25,7 @@ get '/pipe' do
 	end
 
 	Pipe.create do
-		feed 'http://feeds.feedburner.com/kenegozi' #url :title => /a/i
+		feed 'http://feeds.feedburner.com/kenegozi', :title => /jint/i
 	end
 end
 
