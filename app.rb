@@ -25,6 +25,6 @@ get '/pipe' do
 	end
 
 	Pipe.create do
-		feed url, :title => /a/i
+		feed url :title => /a/i
 	end
 end
