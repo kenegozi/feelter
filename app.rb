@@ -13,5 +13,5 @@ get '/pipe' do
 		return "400 bad request"
 	end
 
-	feed url, :title=>params["q"]
+	feed url #, :title=>params["q"]
 end
