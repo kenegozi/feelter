@@ -1,3 +1,4 @@
 sinatra
 mongo
-drewolson-pipe  --source gems.github.com
+simple-rss
+open-uri

@@ -1,12 +1,16 @@
 # encoding: utf-8
 require 'rubygems'
-require 'sinatra'
-require 'pipe'
+require 'simple-rss'
+require 'open-uri'
+require "sinatra"
 
 require "sinatra/reloader" if development?
 
+require 'rss/maker'
+
 get '/pipe' do
 	content_type 'text/plain', :charset => 'utf-8'
+
 	url = params["url"]
 	url = nil if url != nil and url.strip == ''
 	if url==nil then 
@@ -15,17 +19,35 @@ get '/pipe' do
 	
 	url = url.strip
 	
-	p = {}
 	
+	rss = SimpleRSS.parse open(url)
+
 	q = params["q"]
 	q = nil if q != nil and q.strip == ''
-	
-	if q != nil then
-		p[:title] = /#{q}/i
-	end
+	q = q.strip if q != nil
 
-	Pipe.create do
-		feed 'http://feeds.feedburner.com/kenegozi', :title => /jint/i
+	if q != nil then
+		rss.items.reject!{|i| (i.title =~ /#{q}/i) == nil }
 	end
+	
+	SimpleRSS.send(:public, :title)
+	SimpleRSS.send(:public, :link)
+	content = RSS::Maker.make("2.0") do |m|
+		m.channel.title = rss.title
+		m.channel.link = rss.link
+		m.channel.description = rss.title
+		m.items.do_sort = true # sort items by date
+  
+		rss.items.each do |item|
+			i = m.items.new_item
+			i.title = item.title
+			i.link = item.link
+			i.date = item.updated
+			i.content_encoded = item.content
+		end
+
+	end
+	#content.items.first.instance_variables.to_s
+	content.to_s
 end
 
