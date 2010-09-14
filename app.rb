@@ -43,7 +43,8 @@ get '/pipe' do
 			i.title = item.title
 			i.link = item.link
 			i.date = item.updated
-			i.content_encoded = item.content
+			i.content_encoded = item.content_encoded
+			i.content_encoded = item.content if item.content_encoded == nil
 		end
 
 	end
