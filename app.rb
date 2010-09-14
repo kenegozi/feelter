@@ -47,7 +47,7 @@ get '/pipe' do
 		end
 
 	end
-	#content.items.first.instance_variables.to_s
+
 	content.to_s
 end
 
